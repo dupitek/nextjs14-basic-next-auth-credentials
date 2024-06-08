@@ -10,6 +10,10 @@ import { db } from '@/lib/db';
 export const { handlers, auth, signIn, signOut } = NextAuth({
   ...authConfig,
   adapter: PrismaAdapter(db),
+  session: {
+    strategy: "jwt",
+    maxAge: 3 * 24 * 60 * 60 // 3 Day
+  },
   providers: [
     Credentials({
         authorize: async (credentials) => {
@@ -22,7 +26,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
                 const user = await getUserByEmail(email);
                 if (!user) throw new Error("User or password wrong")
 
-                const passwordsMatch = await bcrypt.compare(password, user.password);
+                const passwordsMatch = await bcrypt.compare(password, String(user.password));
 
                 if (!passwordsMatch) throw new Error("User or password wrong")
  
@@ -32,4 +36,13 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         }
     }),
   ],
+  callbacks: {
+    session: async ({token, session}) => {
+      if (token.sub && session.user) {
+        session.user.id = token.sub
+      }
+
+      return session
+    }
+  }
 });

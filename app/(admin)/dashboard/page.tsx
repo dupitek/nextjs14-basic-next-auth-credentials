@@ -1,17 +1,22 @@
-'use client'
+import { auth } from '@/auth'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import TitleBreadcrumb from '@/components/ui/title-breadcrumb'
 
-import { signOut } from 'next-auth/react'
-import { Button } from '@/components/ui/button'
-
-export default function DashboardPage() {
+export default async function DashboardPage() {
+  const session = await auth()
+  console.log('getsessionpage', session)
   return (
-    <div>
-        <div>Dashboard</div>
-        <Button
-            onClick={() => signOut()}
-        >
-            Logout
-        </Button>
-    </div>
+    <>
+      <TitleBreadcrumb title='Dashboard' />
+      <Card>
+        <CardHeader>
+          <CardTitle>Dashboard</CardTitle>
+          <CardDescription>Halaman utama</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div>{session?.user?.name}</div>
+        </CardContent>
+      </Card>
+    </>
   )
 }

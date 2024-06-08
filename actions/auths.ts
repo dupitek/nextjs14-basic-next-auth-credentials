@@ -1,9 +1,8 @@
 'use server'
 
-import { signIn } from "@/auth"
+import { signIn, signOut } from "@/auth"
 import { LoginSchema } from "@/lib/schemas"
 import { AuthError } from "next-auth"
-import { redirect } from "next/navigation"
 import { z } from "zod"
 
 export const authenticate = async (
@@ -28,4 +27,8 @@ export const authenticate = async (
         }
         throw error;
     }
+}
+
+export const logoutUser = async () => {
+    await signOut()
 }
