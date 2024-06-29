@@ -8,6 +8,7 @@ import { SheetClose } from "@/components/ui/sheet"
 import { Button } from "@/components/ui/button"
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
 import { ChevronsUpDown, Home, List, PersonStanding, PersonStandingIcon, Plus, School, Settings } from "lucide-react"
+import { useSession } from "next-auth/react"
 
 export const menu = [
     {
@@ -63,6 +64,7 @@ export const menu = [
 
 const AdminSidebar = ({sheetClose}: {sheetClose?: boolean}) => {
     const pathname = usePathname()
+    const {data} = useSession()
     
     return (
         <div className="bg-white dark:bg-slate-900">
@@ -162,7 +164,7 @@ const AdminSidebar = ({sheetClose}: {sheetClose?: boolean}) => {
                     </ul>
                     <div className="flex mt-auto">
                         <div className="flex justify-between w-full">
-                        <span className="text-sm font-medium text-black dark:text-white">Tes</span>
+                        <span className="text-sm font-medium text-black dark:text-white">{data?.user.name}</span>
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" aria-roledescription="more menu" fill="none" stroke="currentColor" strokeWidth="2" className="w-5 h-5 text-black dark:text-white" strokeLinecap="round" strokeLinejoin="round">
                             <circle cx="12" cy="12" r="1" />
                             <circle cx="19" cy="12" r="1" />

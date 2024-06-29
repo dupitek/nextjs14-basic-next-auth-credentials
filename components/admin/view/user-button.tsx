@@ -23,7 +23,7 @@ export const UserButton = () => {
     <DropdownMenu>
       <DropdownMenuTrigger>
         <Avatar>
-          <AvatarImage src={data?.user?.image ?? ""} />
+          <AvatarImage src={data?.user?.image ?? "/profile.png"} />
           <AvatarFallback className="bg-sky-500">
             <User className="text-white" />
           </AvatarFallback>
@@ -31,7 +31,7 @@ export const UserButton = () => {
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-40" align="end">
         <DropdownMenuItem className="cursor-pointer">
-          <Link href="/admin/profile" className="flex items-center gap-2">
+          <Link href="/dashboard/profile" className="flex items-center gap-2">
             <User />
             <span> Profile</span>
           </Link>

@@ -1,6 +1,6 @@
 'use server'
 
-import { signIn, signOut } from "@/auth"
+import { auth, signIn, signOut } from "@/auth"
 import { LoginSchema } from "@/lib/schemas"
 import { AuthError } from "next-auth"
 import { z } from "zod"
@@ -32,3 +32,15 @@ export const authenticate = async (
 export const logoutUser = async () => {
     await signOut()
 }
+
+export const currentUser = async () => {
+    const session = await auth();
+  
+    return session?.user;
+};
+
+export const currentRole = async () => {
+    const session = await auth();
+  
+    return session?.user?.role;
+};

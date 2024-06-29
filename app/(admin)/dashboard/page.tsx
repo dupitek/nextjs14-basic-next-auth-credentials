@@ -4,7 +4,6 @@ import TitleBreadcrumb from '@/components/ui/title-breadcrumb'
 
 export default async function DashboardPage() {
   const session = await auth()
-  console.log('getsessionpage', session)
   return (
     <>
       <TitleBreadcrumb title='Dashboard' />

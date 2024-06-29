@@ -13,6 +13,22 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Role {
+  SUPERADMIN
+  WRITER
+  MARKETING
+  USER
+}
+
+model Setting {
+  id            String          @id @default(cuid())
+  name          String
+  logo          String
+  title         String
+  description   String
+  
+}
+
 model User {
   id            String          @id @default(cuid())
   name          String?
@@ -21,6 +37,7 @@ model User {
   password      String?
   emailVerified DateTime?
   image         String?
+  role          Role @default(USER)
   Session       Session[]
   Account       Account?
   // Optional for WebAuthn support
@@ -106,6 +123,7 @@ model CategoryService {
   slug          String @unique
   image         String
   body          String
+  services      Service[]
 
   @@map("category_services")
 }
@@ -116,6 +134,8 @@ model Service {
   slug          String @unique
   image         String
   body          String
+  category_service_id   String
+  category_services    CategoryService @relation(fields: [category_service_id], references: [id])
 
   @@map("services")
 }
@@ -136,6 +156,7 @@ model Category {
   slug          String @unique
   image         String
   body          String
+  articles      Article[]
 
   @@map("categories")
 }
@@ -146,6 +167,7 @@ model Article {
   slug          String @unique
   image         String
   body          String
+  categories    Category[]
 
   @@map("articles")
 }

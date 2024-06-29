@@ -9,3 +9,12 @@ export const LoginSchema = z.object({
     }),
     code: z.optional(z.string()),
 });
+
+export const ProfileSchema = z.object({
+  email: z.optional(z.string().email()),
+  username: z.optional(z.string()),
+  name: z.string().min(1, {
+    message: "Name is required",
+  }),
+  image: z.optional(z.string())
+})
